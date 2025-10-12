@@ -1,6 +1,8 @@
-# Proves Core Reference Project
+# LED Tutorial Proves Core Reference Project
 
-This is a reference software implementation for the [Proves Kit](https://docs.proveskit.space/en/latest/).
+Welcome to the tutorial reposiotory! This will walk you through making your first componet on the PROVES Core Reference on the [Proves Kit](https://docs.proveskit.space/en/latest/)!
+
+For actual hardware testing, you need a flight controller board and a USBC cable to plug into the board. Currently v5c's and v5d's are supported
 
 ## System Requirements
 - F Prime System Requirements listed [here](https://fprime.jpl.nasa.gov/latest/docs/getting-started/installing-fprime/#system-requirements)
@@ -8,7 +10,7 @@ This is a reference software implementation for the [Proves Kit](https://docs.pr
 
 ## Installation
 
-First, clone the Proves Core Reference repository.
+First, clone the Proves Core Reference repository. If you want to push changes, you might want [to make a fork] and clone that!(https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo)
 
 ```shell
 git clone https://github.com/Open-Source-Space-Foundation/proves-core-reference
@@ -60,6 +62,20 @@ Finally, run the fprime-gds.
 ```shell
 make gds
 ```
+
+## Answers 
+If you want to check out the answers, they are on the answers branch
+
+```shell
+git checkout answers
+```
+
+or
+
+```shell
+git diff answers <your_branch>
+```
+
 
 ## Running Integration Tests
 
