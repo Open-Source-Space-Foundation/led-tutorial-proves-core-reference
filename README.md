@@ -78,6 +78,9 @@ git diff answers <your_branch>
 
 When you are done with this tutorial, you may want to try modifying your led-blinker component to be like the [Watchdog Component](https://github.com/Open-Source-Space-Foundation/proves-core-reference/blob/main/FprimeZephyrReference/Components/Watchdog/docs/sdd.md) that we have in the main repository. Think about how you can modify the led blinker component to comply with the requirements and standards in the Watchdog Software Design Document
 
+## Let's Get Started!
+
+Since most of what
 
 ## Running Integration Tests
 
