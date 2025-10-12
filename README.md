@@ -80,7 +80,34 @@ When you are done with this tutorial, you may want to try modifying your led-bli
 
 ## Let's Get Started!
 
-Since most of what
+Since most of what is being done in this tutorial is covered by the FPrime tutorial, this readme will link the relevent parts of the FPrime tutorial, and explain between the tutorial what changes you need to make to have the LED blink on the proves core reference.
+
+1. The first thing we want to do it set up the hardware. In order to do so we need to edit the device tree. In Zephyr, the device tree is a structured data format used to describe the hardware layout to the operating system at compile time. It tells Zephyr which peripherals are available (e.g., UART, I2C, SPI), what their addresses are, how they are connected, and how they should be configured. [TO DO ADD LINKS]
+
+In order to support various different boards in the proves-core-reference we have varients of boards. What this means is that in the v5 folder, everything that both the c and the d have in common are there.This allows us to reuse shared configuration while also customizing behavior for specific boards, like the v5c vs the v5d
+
+the stucture of the board files is the following:
+
+boards/bronco_space/
+├── proves_flight_control_board_v5      # Common files shared by all v5 variants
+├── proves_flight_control_board_v5c     # Variant C-specific files
+└── proves_flight_control_board_v5d     # Variant D-specific files
+
+
+Shared Base: proves_flight_control_board_v5
+
+This folder contains everything common to both the v5c and v5d variants. These shared files include:
+
+Kconfig.defconfig: Default Kconfig settings shared across variants.
+proves_flight_control_board_v5.dtsi: The shared devicetree include file.
+proves_flight_control_board_v5-pinctrl.dtsi: Common pin configuration.
+
+This shared configuration ensures consistency and avoids code duplication. In general, when adding components to the board files, you will be editing the dtsi file.
+
+
+
+
+
 
 ## Running Integration Tests
 
