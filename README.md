@@ -1,6 +1,6 @@
 # LED Tutorial Proves Core Reference Project
 
-Welcome to the tutorial reposiotory! This will walk you through making your first componet on the PROVES Core Reference on the [Proves Kit](https://docs.proveskit.space/en/latest/)!
+Welcome to the tutorial repository! This will walk you through making your first component on the PROVES Core Reference on the [Proves Kit](https://docs.proveskit.space/en/latest/)!
 
 For actual hardware testing, you need a flight controller board and a USBC cable to plug into the board. Currently v5c's and v5d's are supported
 
@@ -63,7 +63,7 @@ Finally, run the fprime-gds.
 make gds
 ```
 
-## Answers 
+## Answers
 If you want to check out the answers, they are on the answers branch
 
 ```shell
@@ -81,15 +81,15 @@ git diff answers <your_branch>
 # Part 1: Board Definition
 The first thing we want to do it set up the hardware. In order to do so we need to edit the device tree. In Zephyr, the device tree is a structured data format used to describe the hardware layout to the operating system at compile time. It tells Zephyr which peripherals are available (e.g., UART, I2C, SPI), what their addresses are, how they are connected, and how they should be configured. It is a good idea to give a [quick read of the zephyr device tree docs and familiize yourself with the Zephyr terminalogy](https://docs.zephyrproject.org/latest/build/dts/howtos.html)
 
-In order to support various different boards in the proves-core-reference we have varients of boards. What this means is that in the v5 folder, everything that both the c and the d have in common are there.This allows us to reuse shared configuration while also customizing behavior for specific boards, like the v5c vs the v5d
+In order to support various different boards in the proves-core-reference we have variants of boards. What this means is that in the v5 folder, everything that both the c and the d have in common are there.This allows us to reuse shared configuration while also customizing behavior for specific boards, like the v5c vs the v5d
 
-the stucture of the board files is the following:
+the structure of the board files is the following:
 
 boards/bronco_space/
 ├── proves_flight_control_board_v5      # Common files shared by all v5 variants
 ├── proves_flight_control_board_v5c     # Variant C-specific files
 └── proves_flight_control_board_v5d     # Variant D-specific files
-└── ... as we add more varients of the v5 boards there will be more folders here
+└── ... as we add more variants of the v5 boards there will be more folders here
 
 # Shared Base: proves_flight_control_board_v5
 
@@ -99,7 +99,7 @@ Kconfig.defconfig: Default Kconfig settings shared across variants.
 proves_flight_control_board_v5.dtsi: The shared devicetree include file.
 proves_flight_control_board_v5-pinctrl.dtsi: Common pin configuration.
 
-This shared configuration ensures consistency and avoids code duplication. 
+This shared configuration ensures consistency and avoids code duplication.
 
 # Variant-Specific: proves_flight_control_board_v5d
 This folder contains everything specific to the v5d board variant. It extends the shared configuration from proves_flight_control_board_v5 and defines settings, hardware layout, and metadata unique to the v5d.
@@ -122,14 +122,14 @@ In general, when adding components to the board files, you will be adding the mo
 leds {
 		compatible = "gpio-leds";
 
-add 
-    
+add
+
 led0: led0 {
 			gpios = <&gpio0 23 GPIO_ACTIVE_HIGH>;
 			label = "Watchdog LED";
 		};
 
-next to burnwire 0 and 1. This sets the GPIO pin 23 to be the one associated with the led. But the LED pin is different from the c's and the d's! 
+next to burnwire 0 and 1. This sets the GPIO pin 23 to be the one associated with the led. But the LED pin is different from the c's and the d's!
 
 Add
 
@@ -138,21 +138,34 @@ Add
 	gpios = <&gpio0 24 GPIO_ACTIVE_HIGH>;
 };
 
-This doesnt have to be nested in anything. For boards where the LED is connected to a different pin—such as the C and D variants—we override just the gpios property using a node reference (&led0) and assign it to GPIO pin 24. This approach avoids duplication and keeps the device tree organized by centralizing common settings while allowing for easy customization.
+This does not have to be nested in anything. For boards where the LED is connected to a different pin—such as the C and D variants—we override just the gpios property using a node reference (&led0) and assign it to GPIO pin 24. This approach avoids duplication and keeps the device tree organized by centralizing common settings while allowing for easy customization.
 
 
 2. In ReferenceDelpoymentTopology.cpp, you want to add the following line:
 
    static const struct gpio_dt_spec ledGpio = GPIO_DT_SPEC_GET(DT_NODELABEL(led0), gpios);
 
-This retrieves the GPIO configuration for the led0 device (that you added to the device tree in the previous step) directly from the device tree using its node label. GPIO_DT_SPEC_GET extracts the GPIO controller, pin number, and flags (like active high/low) from the gpios property of the led0 node. 
+This retrieves the GPIO configuration for the led0 device (that you added to the device tree in the previous step) directly from the device tree using its node label. GPIO_DT_SPEC_GET extracts the GPIO controller, pin number, and flags (like active high/low) from the gpios property of the led0 node.
 
 
 3.
 
 # Part 2: Follow the F Prime Tutorial
 
-Since most of what is being done in this tutorial is covered by the FPrime tutorial, this readme will link the relevent parts of the FPrime tutorial, and explain between the tutorial what changes you need to make to have the LED blink on the proves core reference. Something to note is that instead of running fprime-util generate -f and fprime-util build and fprime-gds you can run make generate, make build and make gds
+Since most of what is being done in this tutorial is covered by the FPrime tutorial, [please follow it](https://fprime.jpl.nasa.gov/latest/tutorials-led-blinker/docs/led-blinker/). Something to note is that instead of running fprime-util generate -f and fprime-util build and fprime-gds you can run make generate, make build and make gds. Skip project setup since we already did it above. Instead of the running on hardware step, follow these steps to run on the PROVES kit
+
+1. Put the board in bootloader mode. To do that you should press and hold the two buttons on the flight controller board one at a time and release them one at a time. The board should show up as a detactable drive on your computer with the name RP2350. You can then drag the file in ```build-artifacts/zephyr.uf2``` that you created when building to the board. Alternatively run
+
+``cp build-artifacts/zephyr.uf2 [path-to-your-board]``
+
+where the path to your board is the result of running
+
+```ls -lah /Volumes``` for mac
+
+```findmnt``` for linux
+
+or for Windows check the letter said to be the mount (ex /d/) and then the name of the removable drive (ex /d/RP2350)
+
 
 
 # Part 3: Make it into a watchdog
