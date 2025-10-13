@@ -159,6 +159,13 @@ Since most of what is being done in this tutorial is covered by the FPrime tutor
 
 # Part 3: Make it into a watchdog
 
+Now, try to create something for the flight model by using the understanding of the watchdog component
+
+1. add ```-watchdog``` to the bottom of the supported
+supported:
+  -  ...
+  - watchdog
+
 
 ## Running Integration Tests
 
