@@ -28,7 +28,6 @@ module ReferenceDeployment {
     instance gpioDriver
     instance gpioBurnwire0
     instance gpioBurnwire1
-    instance watchdog
     instance prmDb
     instance rtcManager
     instance imuManager
@@ -99,16 +98,13 @@ module ReferenceDeployment {
       rateGroup1Hz.RateGroupMemberOut[1] -> CdhCore.$health.Run
       rateGroup1Hz.RateGroupMemberOut[2] -> ComCcsds.commsBufferManager.schedIn
       rateGroup1Hz.RateGroupMemberOut[3] -> CdhCore.tlmSend.Run
-      rateGroup1Hz.RateGroupMemberOut[4] -> watchdog.run
+      # rateGroup1Hz.RateGroupMemberOut[4] -> add the LED to this rate group
       rateGroup1Hz.RateGroupMemberOut[5] -> imuManager.run
       rateGroup1Hz.RateGroupMemberOut[6] -> comDelay.run
       rateGroup1Hz.RateGroupMemberOut[7] -> burnwire.schedIn
 
     }
 
-    connections Watchdog {
-      watchdog.gpioSet -> gpioDriver.gpioWrite
-    }
 
     connections BurnwireGpio {
       burnwire.gpioSet[0] -> gpioBurnwire0.gpioWrite
