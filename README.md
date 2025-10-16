@@ -135,9 +135,9 @@ led0: led0 {
 };
 ```
 
-Next to burnwire 0 and 1. This sets GPIO pin 23 to be the one associated with the LED. But the LED pin is different for the v5c and v5d variants!
+Next to burnwire 0 and 1. This sets GPIO pin 23 to be the one associated with the LED. But the LED pin is different for the v5c and v5d variants! 
 
-Add:
+For v5c board, add:
 
 ```
 // Configure the Watchdog LED
@@ -159,7 +159,7 @@ This retrieves the GPIO configuration for the `led0` device (that you added to t
 
 # Part 2: Follow the F Prime Tutorial
 
-Since most of what is being done in this tutorial is covered by the F Prime tutorial, [please follow it](https://fprime.jpl.nasa.gov/latest/tutorials-led-blinker/docs/led-blinker/). Note that instead of running `fprime-util generate -f`, `fprime-util build`, and `fprime-gds`, you can run `make generate`, `make build`, and `make gds`. Skip the project setup since we already did it above. Instead of the "running on hardware" step, follow these steps to run on the PROVES Kit:
+Since most of what is being done in this tutorial is covered by the F Prime tutorial, [please follow it](https://fprime.jpl.nasa.gov/latest/tutorials-led-blinker/docs/led-blinker/). Since there is already a deployment topology, you can skip the `LedBlinker` deployment topology step in the F Prime tutorial.Note that instead of running `fprime-util generate -f`, `fprime-util build`, and `fprime-gds`, you can run `make generate`, `make build`, and `make gds`. Skip the project setup since we already did it above. Instead of the "running on hardware" step, follow these steps to run on the PROVES Kit:
 
 1. Put the board in bootloader mode. To do that, press and hold the two buttons on the flight controller board one at a time and release them one at a time. The board should show up as a detachable drive on your computer with the name RP2350. You can then drag the `build-artifacts/zephyr.uf2` file that you created when building to the board. Alternatively, run:
 
