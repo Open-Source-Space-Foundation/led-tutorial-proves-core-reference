@@ -53,7 +53,11 @@ module ReferenceDeployment {
   instance comDriver: Zephyr.ZephyrUartDriver base id 0x10013000
 
   instance gpioDriver: Zephyr.ZephyrGpioDriver base id 0x10014000
-
+  
+  instance led: Components.Led base id 0x10015000 \
+    queue size Default.QUEUE_SIZE \
+    stack size Default.STACK_SIZE \
+    priority 95
 
   instance rtcManager: Drv.RtcManager base id 0x10016000
 

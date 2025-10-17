@@ -19,3 +19,4 @@ supported:
   - spi
   - uart
   - usbd
+  - watchdog

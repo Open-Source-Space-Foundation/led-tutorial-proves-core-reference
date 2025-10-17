@@ -31,7 +31,7 @@ telemetry packets ReferenceDeploymentPackets {
   }
 
   packet Led id 5 group 4 {
-    # PUT LED TELEM IN HERE
+    ReferenceDeployment.led.BlinkingState
   }
 
   packet Imu id 6 group 4 {

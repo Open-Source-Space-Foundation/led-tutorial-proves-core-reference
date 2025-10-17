@@ -36,6 +36,7 @@ module ReferenceDeployment {
     instance bootloaderTrigger
     instance comDelay
     instance burnwire
+    instance led
 
   # ----------------------------------------------------------------------
   # Pattern graph specifiers
