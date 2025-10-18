@@ -29,6 +29,12 @@ class Led final : public LedComponentBase {
     // Handler implementations for commands
     // ----------------------------------------------------------------------
 
+    //! Handler implementation for parameter updates
+    void parameterUpdated(FwPrmIdType id) override;
+
+    //! Handler implementation for rate group ticks
+    void run_handler(FwIndexType portNum, U32 context) override;
+
     //! Handler implementation for command BLINKING_ON_OFF
     //!
     //! Command to turn on or off the blinking LED
@@ -36,6 +42,9 @@ class Led final : public LedComponentBase {
                                     U32 cmdSeq,           //!< The command sequence number
                                     Fw::On onOff          //!< Indicates whether the blinking should be on or off
                                     ) override;
+
+    //! Helper to drive the physical LED and track state transitions
+    void driveLed(Fw::On state);
     
     Fw::On m_state = Fw::On::OFF; //! Keeps track if LED is on or off
     U64 m_transitions = 0; //! The number of on/off transitions that have occurred from FSW boot up

@@ -26,6 +26,9 @@ module Components {
         @ Telemetry channel to report blinking state
         telemetry BlinkingState: Fw.On
 
+        @ Parameter controlling how many scheduler ticks occur between toggles
+        param BLINK_INTERVAL: U32 default 2
+
         ##############################################################################
         #### Uncomment the following examples to start customizing your component ####
         ##############################################################################
@@ -39,11 +42,14 @@ module Components {
         # @ Example event
         # event ExampleStateEvent(example_state: Fw.On) severity activity high id 0 format "State set to {}"
 
-        # @ Example port: receiving calls from the rate group
-        # sync input port run: Svc.Sched
+        @ Port: receiving calls from the rate group
+        sync input port run: Svc.Sched
 
         # @ Example parameter
         # param PARAMETER_NAME: U32
+
+        @ Port to drive the LED GPIO
+        output port gpioSet: Drv.GpioWrite
 
         ###############################################################################
         # Standard AC Ports: Required for Channels, Events, Commands, and Parameters  #
