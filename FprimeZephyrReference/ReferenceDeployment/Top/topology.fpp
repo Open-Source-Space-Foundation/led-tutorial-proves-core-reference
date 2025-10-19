@@ -99,6 +99,7 @@ module ReferenceDeployment {
       rateGroup1Hz.RateGroupMemberOut[1] -> CdhCore.$health.Run
       rateGroup1Hz.RateGroupMemberOut[2] -> ComCcsds.commsBufferManager.schedIn
       rateGroup1Hz.RateGroupMemberOut[3] -> CdhCore.tlmSend.Run
+      # Drive the LED component at 1Hz so it can manage blinking
       rateGroup1Hz.RateGroupMemberOut[4] -> led.run
       rateGroup1Hz.RateGroupMemberOut[5] -> imuManager.run
       rateGroup1Hz.RateGroupMemberOut[6] -> comDelay.run
@@ -113,6 +114,7 @@ module ReferenceDeployment {
     }
 
     connections LedGpio {
+      # Route the component's GPIO output to the shared Zephyr GPIO driver
       led.gpioSet -> gpioDriver.gpioWrite
     }
 

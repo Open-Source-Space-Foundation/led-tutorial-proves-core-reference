@@ -29,10 +29,10 @@ class Led final : public LedComponentBase {
     // Handler implementations for commands
     // ----------------------------------------------------------------------
 
-    //! Handler implementation for parameter updates
+    //! Reset blink timing and emit events when the interval parameter changes
     void parameterUpdated(FwPrmIdType id) override;
 
-    //! Handler implementation for rate group ticks
+    //! Advance the blink state machine on each scheduler tick
     void run_handler(FwIndexType portNum, U32 context) override;
 
     //! Handler implementation for command BLINKING_ON_OFF
@@ -43,7 +43,7 @@ class Led final : public LedComponentBase {
                                     Fw::On onOff          //!< Indicates whether the blinking should be on or off
                                     ) override;
 
-    //! Helper to drive the physical LED and track state transitions
+    //! Push desired state to the GPIO driver and record transitions/events
     void driveLed(Fw::On state);
     
     Fw::On m_state = Fw::On::OFF; //! Keeps track if LED is on or off

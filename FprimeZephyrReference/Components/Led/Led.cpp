@@ -10,7 +10,7 @@
 namespace Components {
 
 namespace {
-//! Minimum blink interval to prevent divide-by-zero behaviour
+//! Clamp interval to at least one scheduler tick
 constexpr U32 MIN_BLINK_INTERVAL = 1U;
 }  // namespace
 
@@ -32,6 +32,7 @@ void Led ::parameterUpdated(FwPrmIdType id) {
             Fw::ParamValid valid;
             const U32 interval = this->paramGet_BLINK_INTERVAL(valid);
             if ((valid == Fw::ParamValid::VALID) && (interval >= MIN_BLINK_INTERVAL)) {
+                // Start a fresh timing cycle whenever the interval changes
                 this->m_toggleCounter = 0;
                 this->log_ACTIVITY_HI_BlinkIntervalSet(interval);
             }
@@ -48,6 +49,7 @@ void Led ::run_handler(FwIndexType portNum, U32 context) {
 
     if (!this->m_blinking) {
         if (this->m_state == Fw::On::ON) {
+            // Ensure the LED is off when blinking is disabled
             this->driveLed(Fw::On::OFF);
         }
         this->m_toggleCounter = 0;
@@ -64,6 +66,7 @@ void Led ::run_handler(FwIndexType portNum, U32 context) {
     if (this->m_toggleCounter >= interval) {
         this->m_toggleCounter = 0;
         const Fw::On nextState = (this->m_state == Fw::On::ON) ? Fw::On::OFF : Fw::On::ON;
+        // Toggle the hardware when the interval elapses
         this->driveLed(nextState);
     }
 }
@@ -71,6 +74,7 @@ void Led ::run_handler(FwIndexType portNum, U32 context) {
 void Led ::driveLed(Fw::On state) {
     if (this->isConnected_gpioSet_OutputPort(0)) {
         const Fw::Logic logicState = (state == Fw::On::ON) ? Fw::Logic::HIGH : Fw::Logic::LOW;
+        // Mirror the desired state to the Zephyr GPIO driver
         this->gpioSet_out(0, logicState);
     }
 

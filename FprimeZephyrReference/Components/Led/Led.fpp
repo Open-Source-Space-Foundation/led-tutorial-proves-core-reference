@@ -26,7 +26,7 @@ module Components {
         @ Telemetry channel to report blinking state
         telemetry BlinkingState: Fw.On
 
-        @ Parameter controlling how many scheduler ticks occur between toggles
+        @ Controls how many scheduler ticks occur between LED toggles
         param BLINK_INTERVAL: U32 default 2
 
         ##############################################################################
@@ -42,13 +42,13 @@ module Components {
         # @ Example event
         # event ExampleStateEvent(example_state: Fw.On) severity activity high id 0 format "State set to {}"
 
-        @ Port: receiving calls from the rate group
+        @ Scheduler tick that drives the blinking state machine
         sync input port run: Svc.Sched
 
         # @ Example parameter
         # param PARAMETER_NAME: U32
 
-        @ Port to drive the LED GPIO
+        @ Drives the hardware GPIO through the Zephyr GPIO driver
         output port gpioSet: Drv.GpioWrite
 
         ###############################################################################
