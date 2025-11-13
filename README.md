@@ -64,10 +64,10 @@ make gds
 ```
 
 ## Answers
-If you want to check out the answers, they are on the answers branch
+If you want to check out the answers, they are on the sam-inprogress branch
 
 ```shell
-git checkout answers
+git checkout 
 ```
 
 or
